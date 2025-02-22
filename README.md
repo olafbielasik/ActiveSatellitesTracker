@@ -7,7 +7,7 @@ ActiveSatellitesTracker - A 2D Pygame visualization tool for tracking active sat
 - Hover for satellite details (name, altitude, velocity, inclination).
 - Proportional distance scale (5,000 km).
 
-![screenshort](screenshot.jpg)
+![screenshot](screenshot.jpg)
 
  Requirements:
 - Python 3.11 or 3.13
