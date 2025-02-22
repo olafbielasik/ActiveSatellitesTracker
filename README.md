@@ -22,7 +22,7 @@ Install dependencies:
 
 Run:
 
-python main.py
+	python main.py
 
  Usage:
 - Zoom with mouse wheel, pan by dragging left-click.
