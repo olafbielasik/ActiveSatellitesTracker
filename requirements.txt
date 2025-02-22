@@ -1,0 +1,4 @@
+requests
+skyfield
+matplotlib  
+pygame      
