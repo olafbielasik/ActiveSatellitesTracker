@@ -29,5 +29,4 @@ Run:
 - Hover over satellites (white dots) for info.
 - Press Esc or close the 1600x900 window to exit.
 
- Acknowledgments:
 Thanks to Celestrak, Skyfield, Pygame, and the open-source community.
