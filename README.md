@@ -9,7 +9,7 @@ ActiveSatellitesTracker - A 2D Pygame visualization tool for tracking active sat
 
  Requirements:
 - Python 3.11 or 3.13
-- Libraries: pygame, requests, skyfield
+- Libraries: pygame, requests, skyfield, matplotlib 
 
 Installation: Clone or download main.py to ActiveSatellitesTracker directory.
 
