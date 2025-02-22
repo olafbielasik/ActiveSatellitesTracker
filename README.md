@@ -16,11 +16,13 @@ Description - A 2D Pygame visualization tool for tracking active satellites in e
 Installation: Clone or download main.py to ActiveSatellitesTracker directory.
 
 Install dependencies:
-        cd ActiveSatellitesTracker
-        pip install requests skyfield pygame
+
+cd ActiveSatellitesTracker
+pip install requests skyfield pygame
 
 Run:
-        python main.py
+
+python main.py
 
  Usage:
 - Zoom with mouse wheel, pan by dragging left-click.
