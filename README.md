@@ -29,8 +29,5 @@ Run:
 - Hover over satellites (white dots) for info.
 - Press Esc or close the 1600x900 window to exit.
 
- License:
-MIT License (see LICENSE for details, or add one).
-
  Acknowledgments:
 Thanks to Celestrak, Skyfield, Pygame, and the open-source community.
