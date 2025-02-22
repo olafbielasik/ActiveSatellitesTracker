@@ -17,8 +17,8 @@ Installation: Clone or download main.py to ActiveSatellitesTracker directory.
 
 Install dependencies:
 
-cd ActiveSatellitesTracker
-pip install requests skyfield pygame
+	cd ActiveSatellitesTracker
+	pip install requests skyfield pygame
 
 Run:
 
