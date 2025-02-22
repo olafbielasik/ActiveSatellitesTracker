@@ -60,31 +60,23 @@ def draw_dashed_line(surface, color, start, end, dash_length=10, gap_length=10):
 
 def get_elliptical_position(satellite, ts, t):
     """Calculate 2D position for an elliptical orbit, including eccentricity and inclination."""
-    # Get geocentric position
     geocentric = satellite.at(t)
-    position_km = geocentric.position.km  # 3D position (x, y, z) in km
+    position_km = geocentric.position.km  
     
-    # Extract orbital elements from TLE (simplified for 2D projection)
-    # Use XY plane for equatorial projection (ignoring Z for simplicity, but adjust for inclination)
     x, y, z = position_km
     
-    # Rotate for inclination (around Z-axis for 2D projection)
-    inclination = satellite.model.inclo * 180 / math.pi  # Inclination in degrees
-    eccentricity = satellite.model.ecco  # Eccentricity from TLE
+    inclination = satellite.model.inclo * 180 / math.pi  
+    eccentricity = satellite.model.ecco 
     
     angle = math.radians(inclination)
     x_rot = x * math.cos(angle) - y * math.sin(angle)
     y_rot = x * math.sin(angle) + y * math.cos(angle)
     
-    # Adjust for eccentricity to simulate elliptical orbit (simplified)
-    # Use distance from Earth center as a proxy for elliptical path
     distance = math.sqrt(x_rot**2 + y_rot**2)
-    semi_major_axis = satellite.model.a  # Semi-major axis in km (from TLE, if available; approximate with distance)
+    semi_major_axis = satellite.model.a 
     if semi_major_axis is None or semi_major_axis <= 0:
-        semi_major_axis = distance  # Fallback if TLE doesn't provide it
+        semi_major_axis = distance  
     
-    # Normalize to create an elliptical shape (simplified for visibility)
-    # Scale based on eccentricity to stretch along major axis
     eccentricity_factor = 1 + eccentricity
     x_elliptical = x_rot * eccentricity_factor
     y_elliptical = y_rot
@@ -93,26 +85,21 @@ def get_elliptical_position(satellite, ts, t):
 
 def draw_3d_like_earth(surface, center, radius):
     """Draw a high-resolution Earth with a 3D-like appearance using concentric circles and shading."""
-    # Create a surface to draw the Earth with alpha for blending
     earth_surface = pygame.Surface((radius * 2, radius * 2), pygame.SRCALPHA)
     
-    # Draw concentric circles with a gradient to simulate 3D (darker at edges, lighter in center)
-    num_rings = 50  # High resolution for smoothness
+    num_rings = 50  
     for r in range(radius, 0, -1):
-        # Calculate shade: lighter in center, darker at edges
-        shade = int(255 * (r / radius) * 0.7 + 30)  # Blue gradient (0, 0, shade)
+        shade = int(255 * (r / radius) * 0.7 + 30) 
         pygame.draw.circle(earth_surface, (0, 0, shade, 255), (radius, radius), r, 1)
     
-    # Draw a core blue circle for the main Earth body
     pygame.draw.circle(earth_surface, (0, 0, 150, 255), (radius, radius), radius // 2)
     
-    # Blit the 3D-like Earth onto the screen, centered
     surface.blit(earth_surface, (center[0] - radius, center[1] - radius))
 
 def main():
     pygame.init()
-    screen = pygame.display.set_mode((1600, 900))  # Reduced resolution, windowed mode
-    pygame.display.set_caption("ActiveSatellitesTracker")  # Set window title to project name
+    screen = pygame.display.set_mode((1600, 900)) 
+    pygame.display.set_caption("ActiveSatellitesTracker") 
     clock = pygame.time.Clock()
     ts = load.timescale()
     large_font: pygame.font.Font = pygame.font.Font(None, 48)
@@ -131,10 +118,10 @@ def main():
             satellites.append(EarthSatellite(tle_lines[i + 1], tle_lines[i + 2], tle_lines[i], ts))
 
     zoom = 1.0
-    offset_x, offset_y = 0, 0  # Start centered
-    screen_width, screen_height = 1600, 900  # Updated resolution
-    earth_radius = 6371  # Earth's actual radius in km
-    max_distance = 50000  # Increased to cover geostationary orbits (36,000 km) and beyond
+    offset_x, offset_y = 0, 0  
+    screen_width, screen_height = 1600, 900  
+    earth_radius = 6371 
+    max_distance = 50000  
 
     running = True
     while running:
@@ -154,20 +141,17 @@ def main():
         t = ts.now()
         mouse_x, mouse_y = pygame.mouse.get_pos()
 
-        # Calculate scale factor for Earth and satellites
-        scale_factor = screen_width / (2 * max_distance)  # Pixels per km, based on screen width and max distance
-        earth_radius_pixels = int(earth_radius * scale_factor * zoom)  # Scale Earth proportionally
-        earth_center = (screen_width // 2 + offset_x, screen_height // 2 + offset_y)  # Center of screen, adjusted for panning
-        print(f"Earth center: x={earth_center[0]}, y={earth_center[1]}, radius={earth_radius_pixels} px")  # Debug
+        scale_factor = screen_width / (2 * max_distance) 
+        earth_radius_pixels = int(earth_radius * scale_factor * zoom) 
+        earth_center = (screen_width // 2 + offset_x, screen_height // 2 + offset_y)  
+        print(f"Earth center: x={earth_center[0]}, y={earth_center[1]}, radius={earth_radius_pixels} px") 
 
-        # Draw 3D-like Earth with high resolution
         draw_3d_like_earth(screen, earth_center, earth_radius_pixels)
 
         hovered_sat = None
         for sat in satellites:
             try:
-                x, y = get_elliptical_position(sat, ts, t)  # Use elliptical position
-                # Scale satellite position using the same scale factor
+                x, y = get_elliptical_position(sat, ts, t) 
                 x_scaled = (x * scale_factor * zoom) + (screen_width // 2) + offset_x
                 y_scaled = (y * scale_factor * zoom) + (screen_height // 2) + offset_y
                 if 0 <= x_scaled < screen_width and 0 <= y_scaled < screen_height:
@@ -211,8 +195,7 @@ def main():
             arc_radius = 30
             draw_high_res_angle(screen, arc_center, arc_radius, inclination, (255, 255, 0))
 
-        # Distance scale (adjusted for new scale)
-        scale_length_km = 5000  # Larger scale for better visibility
+        scale_length_km = 5000 
         scale_length_pixels = int(scale_length_km * scale_factor * zoom)
         scale_x, scale_y = 50, screen_height - 50
         pygame.draw.line(screen, (255, 255, 255), (scale_x, scale_y), (scale_x + scale_length_pixels, scale_y), 2)
