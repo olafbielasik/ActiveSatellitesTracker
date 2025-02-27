@@ -9,9 +9,7 @@
 
  Requirements:
 - Python 3.11 or 3.13
-- Libraries: pygame, requests, skyfield, matplotlib 
-
-Installation: Clone or download main.py to ActiveSatellitesTracker directory.
+- Libraries: pygame, requests, skyfield, matplotlib
 
 Install dependencies:
 
