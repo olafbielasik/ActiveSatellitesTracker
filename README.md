@@ -1,5 +1,3 @@
-ActiveSatellitesTracker - A 2D Pygame visualization tool for tracking active satellites in elliptical orbits around a high-resolution, 3D-like Earth using TLE data from Celestrak and skyfield. Features include zooming, panning, and satellite info on hover.
-
  Features:
 - Real-time satellite tracking.
 - High-resolution 3D-like Earth visualization.
