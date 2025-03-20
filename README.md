@@ -8,7 +8,7 @@
 ![screenshot](screenshot.jpg)
 
  Requirements:
-- Python 3.11 or 3.13
+- Python 3.13
 - Libraries: pygame, requests, skyfield, matplotlib
 
 Install dependencies:
